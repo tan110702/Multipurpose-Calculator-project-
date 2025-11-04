@@ -1,0 +1,80 @@
+import math
+
+def basic_calculator():
+    print("\n--- Basic Calculator ---")
+    a = float(input("Enter first number: "))
+    op = input("Enter operator (+, -, *, /): ")
+    b = float(input("Enter second number: "))
+
+    if op == '+':
+        print("Result =", a + b)
+    elif op == '-':
+        print("Result =", a - b)
+    elif op == '*':
+        print("Result =", a * b)
+    elif op == '/':
+        print("Result =", a / b if b != 0 else "Cannot divide by zero")
+    else:
+        print("Invalid operator!")
+
+def scientific_calculator():
+    print("\n--- Scientific Calculator ---")
+    print("Options: sin, cos, tan, log, sqrt")
+    func = input("Enter function: ")
+
+    if func in ['sin', 'cos', 'tan']:
+        angle = float(input("Enter angle in degrees: "))
+        rad = math.radians(angle)
+        if func == 'sin':
+            print("sin =", math.sin(rad))
+        elif func == 'cos':
+            print("cos =", math.cos(rad))
+        else:
+            print("tan =", math.tan(rad))
+    elif func == 'log':
+        x = float(input("Enter number: "))
+        print("log =", math.log10(x))
+    elif func == 'sqrt':
+        x = float(input("Enter number: "))
+        print("sqrt =", math.sqrt(x))
+    else:
+        print("Invalid function!")
+
+def bmi_calculator():
+    print("\n--- BMI Calculator ---")
+    w = float(input("Enter weight (kg): "))
+    h = float(input("Enter height (cm): ")) / 100
+    bmi = w / (h ** 2)
+    print(f"Your BMI is {bmi:.2f}")
+    if bmi < 18.5:
+        print("Underweight")
+    elif bmi < 25:
+        print("Normal weight")
+    elif bmi < 30:
+        print("Overweight")
+    else:
+        print("Obese")
+
+def main():
+    while True:
+        print("\n==== Multipurpose Calculator ====")
+        print("1. Basic Calculator")
+        print("2. Scientific Calculator")
+        print("3. BMI Calculator")
+        print("4. Exit")
+
+        ch = input("Enter your choice (1-4): ")
+
+        if ch == '1':
+            basic_calculator()
+        elif ch == '2':
+            scientific_calculator()
+        elif ch == '3':
+            bmi_calculator()
+        elif ch == '4':
+            print("Thank you for using the calculator!")
+            break
+        else:
+            print("Invalid choice!")
+
+main()
