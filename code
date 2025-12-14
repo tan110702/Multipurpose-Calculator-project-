@@ -1,80 +1,162 @@
+import tkinter as tk
+from tkinter import messagebox
 import math
 
-def basic_calculator():
-    print("\n--- Basic Calculator ---")
-    a = float(input("Enter first number: "))
-    op = input("Enter operator (+, -, *, /): ")
-    b = float(input("Enter second number: "))
+---------------- BASIC CALCULATOR ----------------
 
-    if op == '+':
-        print("Result =", a + b)
-    elif op == '-':
-        print("Result =", a - b)
-    elif op == '*':
-        print("Result =", a * b)
-    elif op == '/':
-        print("Result =", a / b if b != 0 else "Cannot divide by zero")
-    else:
-        print("Invalid operator!")
+def open_basic():
+win = tk.Toplevel(root)
+win.title("Basic Calculator")
 
-def scientific_calculator():
-    print("\n--- Scientific Calculator ---")
-    print("Options: sin, cos, tan, log, sqrt")
-    func = input("Enter function: ")
+entry = tk.Entry(win, width=25, font=("Arial", 14))  
+entry.pack(pady=10)  
 
-    if func in ['sin', 'cos', 'tan']:
-        angle = float(input("Enter angle in degrees: "))
-        rad = math.radians(angle)
-        if func == 'sin':
-            print("sin =", math.sin(rad))
-        elif func == 'cos':
-            print("cos =", math.cos(rad))
-        else:
-            print("tan =", math.tan(rad))
-    elif func == 'log':
-        x = float(input("Enter number: "))
-        print("log =", math.log10(x))
-    elif func == 'sqrt':
-        x = float(input("Enter number: "))
-        print("sqrt =", math.sqrt(x))
-    else:
-        print("Invalid function!")
+def calculate():  
+    try:  
+        result = eval(entry.get())  
+        messagebox.showinfo("Result", f"Result: {result}")  
+    except:  
+        messagebox.showerror("Error", "Invalid Expression")  
 
-def bmi_calculator():
-    print("\n--- BMI Calculator ---")
-    w = float(input("Enter weight (kg): "))
-    h = float(input("Enter height (cm): ")) / 100
-    bmi = w / (h ** 2)
-    print(f"Your BMI is {bmi:.2f}")
-    if bmi < 18.5:
-        print("Underweight")
-    elif bmi < 25:
-        print("Normal weight")
-    elif bmi < 30:
-        print("Overweight")
-    else:
-        print("Obese")
+tk.Button(win, text="Calculate", command=calculate).pack(pady=5)
 
-def main():
-    while True:
-        print("\n==== Multipurpose Calculator ====")
-        print("1. Basic Calculator")
-        print("2. Scientific Calculator")
-        print("3. BMI Calculator")
-        print("4. Exit")
+---------------- SCIENTIFIC CALCULATOR ----------------
 
-        ch = input("Enter your choice (1-4): ")
+def open_scientific():
+win = tk.Toplevel(root)
+win.title("Scientific Calculator")
 
-        if ch == '1':
-            basic_calculator()
-        elif ch == '2':
-            scientific_calculator()
-        elif ch == '3':
-            bmi_calculator()
-        elif ch == '4':
-            print("Thank you for using the calculator!")
-            break
-        else:
-            print("Invalid choice!")
+tk.Label(win, text="Enter Value:").pack()  
+entry = tk.Entry(win)  
+entry.pack()  
 
-main()
+def sci(op):  
+    try:  
+        val = float(entry.get())  
+        if op == "sin":  
+            res = math.sin(val)  
+        elif op == "cos":  
+            res = math.cos(val)  
+        elif op == "tan":  
+            res = math.tan(val)  
+        elif op == "sqrt":  
+            res = math.sqrt(val)  
+        elif op == "log":  
+            res = math.log(val)  
+        messagebox.showinfo("Result", f"Result: {res}")  
+    except:  
+        messagebox.showerror("Error", "Invalid Input")  
+
+for op in ["sin", "cos", "tan", "sqrt", "log"]:  
+    tk.Button(win, text=op, width=10, command=lambda o=op: sci(o)).pack(pady=2)
+
+---------------- BMI CALCULATOR ----------------
+
+def open_bmi():
+win = tk.Toplevel(root)
+win.title("BMI Calculator")
+
+tk.Label(win, text="Weight (kg):").pack()  
+w = tk.Entry(win)  
+w.pack()  
+
+tk.Label(win, text="Height (m):").pack()  
+h = tk.Entry(win)  
+h.pack()  
+
+def bmi_calc():  
+    try:  
+        bmi = float(w.get()) / (float(h.get()) ** 2)  
+        messagebox.showinfo("BMI", f"Your BMI: {bmi:.2f}")  
+    except:  
+        messagebox.showerror("Error", "Invalid Input")  
+
+tk.Button(win, text="Calculate BMI", command=bmi_calc).pack(pady=5)
+
+---------------- CALORIE CALCULATOR ----------------
+
+def open_calorie():
+win = tk.Toplevel(root)
+win.title("Calorie Calculator")
+
+tk.Label(win, text="Weight (kg):").pack()  
+w = tk.Entry(win)  
+w.pack()  
+
+tk.Label(win, text="Height (cm):").pack()  
+h = tk.Entry(win)  
+h.pack()  
+
+tk.Label(win, text="Age:").pack()  
+age = tk.Entry(win)  
+age.pack()  
+
+tk.Label(win, text="Gender (M/F):").pack()  
+g = tk.Entry(win)  
+g.pack()  
+
+def calorie_calc():  
+    try:  
+        weight = float(w.get())  
+        height = float(h.get())  
+        ag = int(age.get())  
+        gender = g.get().upper()  
+
+        if gender == "M":  
+            bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * ag)  
+        else:  
+            bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * ag)  
+
+        messagebox.showinfo("BMR", f"Your BMR: {bmr:.2f}")  
+    except:  
+        messagebox.showerror("Error", "Invalid Input")  
+
+tk.Button(win, text="Calculate Calories", command=calorie_calc).pack(pady=5)
+
+---------------- UNIT CONVERTER ----------------
+
+def open_converter():
+win = tk.Toplevel(root)
+win.title("Unit Converter")
+
+tk.Label(win, text="Enter Value:").pack()  
+val = tk.Entry(win)  
+val.pack()  
+
+def convert(opt):  
+    try:  
+        v = float(val.get())  
+        if opt == 1:  
+            res = v * 0.621371  
+        elif opt == 2:  
+            res = v / 0.621371  
+        elif opt == 3:  
+            res = v * 2.20462  
+        elif opt == 4:  
+            res = v / 2.20462  
+        messagebox.showinfo("Result", f"Result: {res:.2f}")  
+    except:  
+        messagebox.showerror("Error", "Invalid Input")  
+
+tk.Button(win, text="Km → Miles", command=lambda: convert(1)).pack(pady=2)  
+tk.Button(win, text="Miles → Km", command=lambda: convert(2)).pack(pady=2)  
+tk.Button(win, text="Kg → Pounds", command=lambda: convert(3)).pack(pady=2)  
+tk.Button(win, text="Pounds → Kg", command=lambda: convert(4)).pack(pady=2)
+
+---------------- MAIN WINDOW ----------------
+
+root = tk.Tk()
+root.title("Multi-Purpose Calculator")
+root.geometry("300x350")
+
+tk.Label(root, text="Multi-Purpose Calculator", font=("Arial", 14, "bold")).pack(pady=10)
+
+tk.Button(root, text="Basic Calculator", width=25, command=open_basic).pack(pady=5)
+tk.Button(root, text="Scientific Calculator", width=25, command=open_scientific).pack(pady=5)
+tk.Button(root, text="BMI Calculator", width=25, command=open_bmi).pack(pady=5)
+tk.Button(root, text="Calorie Calculator", width=25, command=open_calorie).pack(pady=5)
+tk.Button(root, text="Unit Converter", width=25, command=open_converter).pack(pady=5)
+
+tk.Button(root, text="Exit", width=25, command=root.destroy).pack(pady=10)
+
+root.mainloop()
